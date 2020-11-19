@@ -1,0 +1,12 @@
+Use employeedb;
+
+CREATE TABLE IF NOT EXISTS`employee`(
+    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    emp_name varchar(250) NOT NULL,
+    emp_code varchar(40) DEFAULT NULL,
+    salary varchar(250) DEFAULT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
+)
+CHARACTER SET 'utf8' COLLATE 'utf8_icelandic_ci';
