@@ -23,9 +23,25 @@ var mysqlConnection = msql.createPool({
 //
 //
 //======Create Promise base funtion
+/*
 function query(quarySql) {
   return new Promise((resolve, reject) => {
     mysqlConnection.query(quarySql, function (err, results) {
+      //asynchronous funtion   function (err, results)
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
+*/
+
+function query(quarySql) {
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query(quarySql, (err, results) => {
       //asynchronous funtion   function (err, results)
       if (err) {
         reject(err);

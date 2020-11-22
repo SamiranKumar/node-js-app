@@ -13,8 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/employees", (req, res) => {
   let q = "SELECT * FROM employee";
 
-  dbQuary(q)
-    .then(function (emp) {
+  query(q)
+    .then((emp) => {
       console.log("emp:", emp);
       res.send(emp);
     })
@@ -27,7 +27,7 @@ app.get("/employees", (req, res) => {
 app.get("/employees1", async (req, res) => {
   let q = "SELECT * FROM employee";
   try {
-    const emp = await dbQuary(q);
+    const emp = await query(q);
     console.log("emp:", emp);
     res.send(emp);
   } catch (ex) {
