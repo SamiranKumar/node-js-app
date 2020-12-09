@@ -13,7 +13,7 @@ const employees = require("./routers/employees"); //routers file
 const employees_v2 = require("./routers/employees_v2"); //routers file
 
 app.use("/api/v1/employees", employees);
-app.use("api/v2/employees", employees_v2);
+app.use("/api/v2/employees", employees_v2);
 
 /*
  url Not found
@@ -36,7 +36,7 @@ app.use((error, req, res, next) => {
  *
  *
  */
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4002;
 
 app.listen(port, () => {
   console.log("Express server is Running Port:4000");
