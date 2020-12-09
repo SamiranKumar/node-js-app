@@ -39,7 +39,7 @@ function query(quarySql) {
 
 */
 
-function query(quarySql) {
+function queryPromise(quarySql) {
   return new Promise((resolve, reject) => {
     mysqlConnection.query(quarySql, (err, results) => {
       //asynchronous funtion   function (err, results)
@@ -53,11 +53,12 @@ function query(quarySql) {
 }
 
 //======Create Promise base funtion
-function queryCb(quarySql, callback) {
+function queryCallback(quarySql, callback) {
   mysqlConnection.query(quarySql, function (err, results) {
     if (err) callback(err);
     callback(null, results);
   });
 }
 
-module.exports = { query, queryCb };
+module.exports = { queryPromise, queryCallback, mysqlConnection };
+//module.exports = { mysqlConnection };

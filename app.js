@@ -1,5 +1,3 @@
-const { query, queryCb } = require("./db");
-
 const express = require("express");
 
 const app = express();
@@ -10,48 +8,41 @@ app.use(express.urlencoded({ extended: true }));
 ///
 ////
 ////
-app.get("/employees", (req, res) => {
-  let q = "SELECT * FROM employee";
 
-  query(q)
-    .then((emp) => {
-      console.log("emp:", emp);
-      res.send(emp);
-    })
-    .catch((err) => {
-      console.error("ERROR:" + err);
-      res.status(400).send(err.message);
-    });
+const employees = require("./routers/employees"); //routers file
+const employees_v2 = require("./routers/employees_v2"); //routers file
+
+app.use("/api/v1/employees", employees);
+app.use("api/v2/employees", employees_v2);
+
+/*
+ url Not found
+ */
+app.use((req, res, next) => {
+  const error = new Error("Not Found!");
+  error.status = 404;
+  next(error);
 });
 
-app.get("/employees1", async (req, res) => {
-  let q = "SELECT * FROM employee";
-  try {
-    const emp = await query(q);
-    console.log("emp:", emp);
-    res.send(emp);
-  } catch (ex) {
-    console.error("ERROR:" + ex);
-    res.status(400).send(ex.message);
-  }
-});
-
-app.get("/employees2", (req, res) => {
-  let q = "SELECT * FROM employee";
-  queryCb(q, function (err, results) {
-    if (err) {
-      console.error("ERROR:" + err);
-      res.status(400).send(err.message);
-    } else {
-      console.log("emp:", results);
-      res.send(results);
-    }
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    message: error.message,
   });
 });
 
-app.listen(4000, () => {
+/*
+ *
+ *
+ *
+ */
+const port = process.env.PORT || 4000;
+
+app.listen(port, () => {
   console.log("Express server is Running Port:4000");
 });
+
+//module.exports = app; //app.js apply for public access modifier
 
 // //===========================================================
 // var mysqlConnection = msql.createConnection({
